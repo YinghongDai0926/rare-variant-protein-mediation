@@ -1,0 +1,10 @@
+{
+  "analysis_runtime_reported_by_author": {
+    "python": "3.12.6",
+    "R": "4.5.1",
+    "R_release_date": "2025-06-13",
+    "R_codename": "Great Square Root"
+  },
+  "dependency_package_versions": "Not provided; no historical package version numbers have been inferred.",
+  "scope": "main analyses, necessary preparation/aggregation and GMT-universe enrichment; no sensitivity, standalone plotting, case-card interpretation or missing upstream generators"
+}

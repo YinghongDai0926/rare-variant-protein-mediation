@@ -1,0 +1,11 @@
+name: protein-mediation-core
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.6
+  - r-base=4.5.1
+  - numpy
+  - pandas
+  - scipy
+  - statsmodels
+  - tqdm

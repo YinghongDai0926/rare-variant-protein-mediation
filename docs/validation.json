@@ -1,0 +1,196 @@
+{
+  "synthetic_only": true,
+  "core_programs": 27,
+  "launchers": 27,
+  "author_reported_runtime": {
+    "python": "3.12.6",
+    "R": "4.5.1"
+  },
+  "validation_runtime": {
+    "python": "3.11.17",
+    "R_available_but_not_used_in_core_tests": "4.6.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "statsmodels": "0.15.0"
+  },
+  "exact_author_runtime_tested": false,
+  "synthetic_n": 800,
+  "test_only_overrides": {
+    "N_BOOT": 40,
+    "MIN_BOOT_SUCCESS": 20,
+    "MY_MIN_SAMPLES": 200,
+    "CHROMOSOMES": [
+      "1"
+    ]
+  },
+  "release_defaults": {
+    "N_BOOT": 200,
+    "MIN_BOOT_SUCCESS": 100,
+    "MY_MIN_SAMPLES": 2000,
+    "CHROMOSOMES": "1-22,X,Y"
+  },
+  "execution_checks": [
+    {
+      "entrypoint": "01_E_to_M/01_cis_gene_based_pqtl.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "01_E_to_M/02_merge_and_complete_FDR_correct.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "01_E_to_M/03_filter_rank_cis_pqtl_significant.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/01_prevalent_proteom_phenome.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/02_incident_proteom_phenome.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/03_merge_and_fdr_bonf.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/04_clean_prev_fdr_results.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/05_clean_inc_fdr_results.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "03_E_to_Y/01_prepare_EY_matrix_file.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "03_E_to_Y/02_prepare_gene_disease_analysis_input.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "03_E_to_Y/03_E_to_Y_main_analysis.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "03_E_to_Y/04_merge_all_and_correction.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "04_mediation/01_run_mediation_primary.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "04_mediation/02_aggregate_mediation_results.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "04_mediation/03_prioritize_mediation_hits.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "04_mediation/04_extract_main_and_supp_tables.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/01_build_all_protein_mediation_runset.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/02_run_all_protein_mediation_scan.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/04_compare_encoded_vs_best_nonencoded.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/05_encoded_nonencoded_correlation.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/07_residual_mediation_analysis.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "05_all_protein_comparison/08_final_pathway_classification.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "06_enrichment/01_prepare_protein_sets.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "06_enrichment/02_run_enrichment_ora.sh",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "entrypoint": "02_M_to_Y/03_merge_and_fdr_bonf.sh",
+      "returncode": 1,
+      "expected": 1
+    }
+  ],
+  "auxiliary_checks": [
+    {
+      "check": "optional_existing_feasibility_aggregator",
+      "script": "04_mediation/00_aggregate_feasibility_results.sh",
+      "code": 0,
+      "stderr": ""
+    },
+    {
+      "check": "one_based_chromosome_array",
+      "script": "01_E_to_M/01_cis_gene_based_pqtl.sh",
+      "code": 0,
+      "stderr": ""
+    }
+  ],
+  "assertions": {
+    "universe_old_new_p_q_exact": true,
+    "ontology_split_preserves_joint_q": true,
+    "missing_chunk_rejected": true,
+    "legacy_blank_chunk_supported": true,
+    "synthetic_data_only": true,
+    "analysis_entrypoints_executed": 26,
+    "n_boot_for_synthetic_test_only": 40,
+    "min_boot_success_for_synthetic_test_only": 20
+  },
+  "unchanged_statistical_functions": 29,
+  "static_checks": 56
+}

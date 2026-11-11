@@ -1,0 +1,8 @@
+# Author-reported Python runtime: 3.12.6 (see environment.yml).
+# Historical package versions were not supplied; this is a dependency list, not a lockfile.
+numpy
+pandas
+scipy
+statsmodels
+# Optional progress display; the prevalent association program has a no-progress fallback.
+tqdm

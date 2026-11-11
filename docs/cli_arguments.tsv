@@ -1,0 +1,255 @@
+script	flags	required	default_expression	help
+01_E_to_M/01_cis_gene_based_pqtl.py	--chr	True		1-22, X, Y
+01_E_to_M/01_cis_gene_based_pqtl.py	--carriers_tsv_template	True		.../chr{CHR}.gene_carriers.filtered.tsv
+01_E_to_M/01_cis_gene_based_pqtl.py	--covar_protein_tsv	True		wes_olink_covariates_analytic.tsv
+01_E_to_M/01_cis_gene_based_pqtl.py	--sample_col		sample	
+01_E_to_M/01_cis_gene_based_pqtl.py	--cov_cols		COV_COLS_DEFAULT	
+01_E_to_M/01_cis_gene_based_pqtl.py	--min_carriers_used		10	Min carriers among non-missing protein samples (default 10)
+01_E_to_M/01_cis_gene_based_pqtl.py	--min_samples_used		50	Minimum nonmissing samples per protein (original threshold: 50)
+01_E_to_M/01_cis_gene_based_pqtl.py	--chunksize		500000	
+01_E_to_M/01_cis_gene_based_pqtl.py	--outdir	True		
+01_E_to_M/02_merge_and_complete_FDR_correct.py	--indir	True		
+01_E_to_M/02_merge_and_complete_FDR_correct.py	--out	True		
+01_E_to_M/03_filter_rank_cis_pqtl_significant.py	--in_tsv	True		Input TSV with global corrections, e.g. cis_pqtl.per_protein.ALL.global_corrected.tsv
+01_E_to_M/03_filter_rank_cis_pqtl_significant.py	--out_prefix	True		Output prefix, e.g. /path/cis_pqtl.per_protein
+01_E_to_M/03_filter_rank_cis_pqtl_significant.py	--fdr_thr		0.05	FDR threshold (default 0.05)
+01_E_to_M/03_filter_rank_cis_pqtl_significant.py	--bonf_thr		0.05	Bonferroni threshold on bonf_p_global (default 0.05)
+01_E_to_M/03_filter_rank_cis_pqtl_significant.py	--write_full			Also write full (unscreened) table sorted by p.
+02_M_to_Y/01_prevalent_proteom_phenome.py	--analytic_tsv	True		wes_olink_covariates_analytic.tsv
+02_M_to_Y/01_prevalent_proteom_phenome.py	--icd_first_tsv	True		icd10_first_occurrence.tsv: sample icd3 first_date
+02_M_to_Y/01_prevalent_proteom_phenome.py	--followup_tsv	True		followup_dates.tsv: sample baseline_date death_date censor_date
+02_M_to_Y/01_prevalent_proteom_phenome.py	--out_tsv	True		Output TSV path
+02_M_to_Y/01_prevalent_proteom_phenome.py	--min_cases		50	Minimum prevalent cases per icd3 to run
+02_M_to_Y/01_prevalent_proteom_phenome.py	--min_controls		200	Minimum controls per icd3 to run
+02_M_to_Y/01_prevalent_proteom_phenome.py	--icd3_list			Optional file with icd3 codes (one per line) to restrict
+02_M_to_Y/01_prevalent_proteom_phenome.py	--protein_start		0	Start index (0-based) of protein columns slice
+02_M_to_Y/01_prevalent_proteom_phenome.py	--protein_end			End index (exclusive) of protein columns slice
+02_M_to_Y/01_prevalent_proteom_phenome.py	--compute_fdr_within_chunk			If set, compute FDR within this run's results (NOTE: not global if chunked)
+02_M_to_Y/02_incident_proteom_phenome.py	--analytic_tsv	True		
+02_M_to_Y/02_incident_proteom_phenome.py	--icd_first_tsv	True		
+02_M_to_Y/02_incident_proteom_phenome.py	--followup_tsv	True		
+02_M_to_Y/02_incident_proteom_phenome.py	--out_tsv	True		
+02_M_to_Y/02_incident_proteom_phenome.py	--min_events		50	
+02_M_to_Y/02_incident_proteom_phenome.py	--min_samples		2000	Minimum complete-case at-risk samples per protein (original threshold: 2000)
+02_M_to_Y/02_incident_proteom_phenome.py	--icd3_list			Optional file with icd3 codes (one per line)
+02_M_to_Y/02_incident_proteom_phenome.py	--protein_start		0	
+02_M_to_Y/02_incident_proteom_phenome.py	--protein_end			
+02_M_to_Y/02_incident_proteom_phenome.py	--log_every		25	Print progress every N icd3 codes
+02_M_to_Y/03_merge_and_fdr_bonf.py	--chunk_glob	True		"Glob pattern, e.g. ""/path/inc_chunks/inc_chunk_*.tsv"""
+02_M_to_Y/03_merge_and_fdr_bonf.py	--out_prefix	True		"Output prefix, e.g. ""/path/results/inc_proteome_phenome"" (no .tsv)"
+02_M_to_Y/03_merge_and_fdr_bonf.py	--alpha		0.05	Significance threshold for q-values (default 0.05)
+02_M_to_Y/03_merge_and_fdr_bonf.py	--sort_full_by		p	How to sort the full (unfiltered) output (default: p)
+02_M_to_Y/04_clean_prev_fdr_results.py	--all_tsv	True		prev_proteome_phenome.all.tsv
+02_M_to_Y/04_clean_prev_fdr_results.py	--orig_fdr_tsv	True		prev_proteome_phenome.fdr_q_lt0.05.tsv
+02_M_to_Y/04_clean_prev_fdr_results.py	--out_cleaned_tsv	True		Output cleaned FDR file
+02_M_to_Y/04_clean_prev_fdr_results.py	--out_anomaly_tsv			Output anomaly rows TSV
+02_M_to_Y/04_clean_prev_fdr_results.py	--out_qc_txt			Output QC text file
+02_M_to_Y/04_clean_prev_fdr_results.py	--beta_abs_hard_cut		10.0	Hard cutoff for absolute beta to define anomaly (default 10)
+02_M_to_Y/04_clean_prev_fdr_results.py	--se_hard_cut		5.0	Hard cutoff for SE to define anomaly (default 5)
+02_M_to_Y/04_clean_prev_fdr_results.py	--tol_log_or		0.005	Tolerance for consistency between beta and log(OR)
+02_M_to_Y/04_clean_prev_fdr_results.py	--tol_ci		0.05	Tolerance for consistency between beta±1.96*se and log(CI)
+02_M_to_Y/04_clean_prev_fdr_results.py	--z_underflow_min		30.0	Minimum |beta/se| to accept p=0 as likely numeric underflow of an extremely significant valid result
+02_M_to_Y/05_clean_inc_fdr_results.py	--all_tsv	True		inc_proteome_phenome.all.tsv
+02_M_to_Y/05_clean_inc_fdr_results.py	--orig_fdr_tsv	True		inc_proteome_phenome.fdr_q_lt0.05.tsv
+02_M_to_Y/05_clean_inc_fdr_results.py	--out_cleaned_tsv	True		Output cleaned FDR file
+02_M_to_Y/05_clean_inc_fdr_results.py	--out_anomaly_tsv	False		Output anomaly rows TSV
+02_M_to_Y/05_clean_inc_fdr_results.py	--out_qc_txt	False		Output QC text file
+02_M_to_Y/05_clean_inc_fdr_results.py	--beta_abs_hard_cut		10.0	Hard cutoff for absolute beta to define anomaly (default 10)
+02_M_to_Y/05_clean_inc_fdr_results.py	--se_hard_cut		5.0	Hard cutoff for SE to define anomaly (default 5)
+02_M_to_Y/05_clean_inc_fdr_results.py	--tol_log_hr		0.005	Tolerance for consistency between beta and log(HR)
+02_M_to_Y/05_clean_inc_fdr_results.py	--tol_ci		0.05	Tolerance for consistency between beta±1.96*se and log(CI)
+02_M_to_Y/05_clean_inc_fdr_results.py	--z_underflow_min		30.0	Minimum |beta/se| to accept p=0 as likely numeric underflow of an extremely significant valid result
+03_E_to_Y/01_prepare_EY_matrix_file.py	--carriers_tsv_template	True		Template: /path/chr{CHR}.gene_carriers.filtered.tsv
+03_E_to_Y/01_prepare_EY_matrix_file.py	--analysis_samples_tsv	True		wes_olink_covariates_analytic.tsv (contains sample + covariates + proteins)
+03_E_to_Y/01_prepare_EY_matrix_file.py	--sample_col		sample	
+03_E_to_Y/01_prepare_EY_matrix_file.py	--cov_cols		COV_COLS_DEFAULT	Covariate columns in analysis_samples_tsv (default: age sex PC1..PC10)
+03_E_to_Y/01_prepare_EY_matrix_file.py	--chroms		CHROMS_DEFAULT	Chromosomes to include (default: 1-22 X Y)
+03_E_to_Y/01_prepare_EY_matrix_file.py	--chunksize		1000000	
+03_E_to_Y/01_prepare_EY_matrix_file.py	--outdir	True		
+03_E_to_Y/01_prepare_EY_matrix_file.py	--min_carriers		10	
+03_E_to_Y/01_prepare_EY_matrix_file.py	--min_noncarriers		200	
+03_E_to_Y/01_prepare_EY_matrix_file.py	--max_carrier_rate		0.05	Exclude if carrier_rate > this (default 0.05). Set 1 to disable.
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--outdir	True		Output directory
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--log			Log file path (default: outdir/step5_prepare_inputs.log)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--analysis_samples_tsv			wes_olink_covariates_analytic.tsv (contains sample column)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--sample_col		sample	Sample column name in analysis_samples_tsv
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--samples_list			samples.txt (one sample per line), alternative to analysis_samples_tsv
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--first_occ	True		icd10_first_occurrence.tsv
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--followup	True		followup_dates.tsv
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--chunksize		2000000	Chunksize for first_occ reading (default 2e6)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--out_inc_counts			Output inc_icd3_counts.tsv (default in outdir)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--out_prev_counts			Output prev_icd3_counts.tsv (default in outdir)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--carrier_counts_tsv	True		E_matrix.carrier_counts.tsv (gene n_carriers)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--min_carriers		10	Exclude if n_carriers < this (default 10)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--min_noncarriers		200	Exclude if n_noncarriers < this (default 200)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--alert_carrier_rate		0.05	ALERT if carrier_rate > this (default 0.05)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--qc_prefix			Prefix for QC outputs (default outdir/step5_inputs)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--E_npz			E_matrix.carrier_binary.npz (optional)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--E_genes			E_matrix.genes.txt (optional)
+03_E_to_Y/02_prepare_gene_disease_analysis_input.py	--E_samples			E_matrix.samples.txt (optional)
+03_E_to_Y/03_E_to_Y_main_analysis.py	--mode	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--sample-file	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--gene-file	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--carrier-matrix	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--carrier-counts	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--covariate-file	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--followup-file	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--icd-file	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--counts-file	True		Step5A rebuilt prev/inc icd3 counts file
+03_E_to_Y/03_E_to_Y_main_analysis.py	--out	True		
+03_E_to_Y/03_E_to_Y_main_analysis.py	--out-skip			
+03_E_to_Y/03_E_to_Y_main_analysis.py	--covariates		age,sex,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--chunk-id		0	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--n-chunks		1	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--icd3-keep			
+03_E_to_Y/03_E_to_Y_main_analysis.py	--gene-exclude			
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carriers-global		5	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--max-carrier-rate-global		0.2	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-case-like		20	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-ctrl-like		20	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carriers-used		3	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-noncarriers-used		30	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carrier-cases		1	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carrier-controls		1	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carrier-events		1	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--min-carrier-nonevents		1	
+03_E_to_Y/03_E_to_Y_main_analysis.py	--max-abs-beta		20.0	
+03_E_to_Y/04_merge_all_and_correction.py	--mode	True		
+03_E_to_Y/04_merge_all_and_correction.py	--indir	True		Directory containing chunk result files
+03_E_to_Y/04_merge_all_and_correction.py	--outdir			Output directory; default = indir
+03_E_to_Y/04_merge_all_and_correction.py	--fdr-threshold		0.05	
+04_mediation/00_aggregate_feasibility_results.py	--indir	True		Step4_feasibility directory
+04_mediation/00_aggregate_feasibility_results.py	--outdir	True		Output directory
+04_mediation/01_run_mediation_primary.py	--runset_tsv	True		03_runset_primary.tsv
+04_mediation/01_run_mediation_primary.py	--outdir	True		Output directory for primary mediation
+04_mediation/01_run_mediation_primary.py	--table_root			Root for relative table_path values; default is runset directory
+04_mediation/01_run_mediation_primary.py	--table_path_prefix_from			Optional old absolute path prefix to remap
+04_mediation/01_run_mediation_primary.py	--table_path_prefix_to			Replacement absolute path prefix
+04_mediation/01_run_mediation_primary.py	--chunk_id		0	
+04_mediation/01_run_mediation_primary.py	--n_chunks		1	
+04_mediation/01_run_mediation_primary.py	--covariates		DEFAULT_COVS	Covariates to adjust
+04_mediation/01_run_mediation_primary.py	--min_complete_case		200	
+04_mediation/01_run_mediation_primary.py	--min_events_complete_case		20	
+04_mediation/01_run_mediation_primary.py	--min_carriers_complete_case		10	
+04_mediation/01_run_mediation_primary.py	--min_noncarriers_complete_case		200	
+04_mediation/01_run_mediation_primary.py	--min_carrier_events_complete_case		2	
+04_mediation/01_run_mediation_primary.py	--min_carrier_nonevents_complete_case		5	
+04_mediation/01_run_mediation_primary.py	--min_M_sd		1e-08	
+04_mediation/01_run_mediation_primary.py	--n_boot		200	
+04_mediation/01_run_mediation_primary.py	--min_boot_success		100	
+04_mediation/01_run_mediation_primary.py	--seed_base		20260416	
+04_mediation/02_aggregate_mediation_results.py	--indir	True		Step5 mediation directory
+04_mediation/02_aggregate_mediation_results.py	--outdir	True		Output directory
+04_mediation/02_aggregate_mediation_results.py	--alpha		0.05	
+04_mediation/02_aggregate_mediation_results.py	--boot_stability_threshold		0.8	
+04_mediation/03_prioritize_mediation_hits.py	--mediation_results_tsv	True		02_mediation_results.all.tsv.gz
+04_mediation/03_prioritize_mediation_hits.py	--outdir	True		Output directory
+04_mediation/03_prioritize_mediation_hits.py	--min_boot_success_rate		0.8	
+04_mediation/03_prioritize_mediation_hits.py	--min_n_boot_success		100	
+04_mediation/03_prioritize_mediation_hits.py	--require_fdr		1	1: require indirect_q_boot < 0.05; 0: only require indirect_p_boot < 0.05
+04_mediation/03_prioritize_mediation_hits.py	--alpha		0.05	
+04_mediation/04_extract_main_and_supp_tables.py	--ranked_all_tsv	True		03_mediation_ranked_all.tsv.gz
+04_mediation/04_extract_main_and_supp_tables.py	--ranked_sig_tsv	True		03_mediation_ranked_significant.tsv.gz
+04_mediation/04_extract_main_and_supp_tables.py	--ranked_tier1_tsv	True		03_mediation_ranked_Tier1.tsv.gz
+04_mediation/04_extract_main_and_supp_tables.py	--ranked_tier2_tsv	True		03_mediation_ranked_Tier2.tsv.gz
+04_mediation/04_extract_main_and_supp_tables.py	--mediation_results_tsv	True		02_mediation_results.all.tsv.gz
+04_mediation/04_extract_main_and_supp_tables.py	--outdir	True		Output directory
+04_mediation/04_extract_main_and_supp_tables.py	--top_n_overall		20	
+04_mediation/04_extract_main_and_supp_tables.py	--top_n_tier2		20	
+04_mediation/04_extract_main_and_supp_tables.py	--top_n_tier1		8	
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--master-table	True		Supported mediation trios, e.g. 03_mediation_ranked_significant.tsv.gz; biological annotations are optional.
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--covariate-protein-table	True		Path to wes_olink_covariates_analytic.tsv.
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--outdir	True		Output directory.
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--prefix		01	Output file prefix. Default: 01.
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--filter-supported			If set, keep only rows with pass_priority_filter == TRUE. Use this if master table contains both supported and non-supported trios.
+05_all_protein_comparison/01_build_all_protein_mediation_runset.py	--strict-encoded-protein-check			If set, stop when any encoded protein is not found in the Olink protein columns.
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--runset_tsv	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--covariate_protein_table	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--e_samples	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--e_genes	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--e_matrix	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--first_occurrence	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--followup_dates	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--outdir	True		
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--chunk_id		0	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--n_chunks		50	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--covariates		DEFAULT_COVS	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_complete_case		200	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_events_complete_case		20	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_carriers_complete_case		10	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_noncarriers_complete_case		200	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_carrier_events_complete_case		2	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_carrier_nonevents_complete_case		5	
+05_all_protein_comparison/02_run_all_protein_mediation_scan.py	--min_M_sd		1e-08	
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--scan_dir	True		Directory containing 02_all_protein_mediation_scan.chunk*.tsv.gz.
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--chunk_pattern		02_all_protein_mediation_scan.chunk*.tsv.gz	Chunk file pattern. Default: 02_all_protein_mediation_scan.chunk*.tsv.gz
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--supported_pairs	True		Path to 01_supported_gene_disease_pairs.tsv.
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--outdir	True		Output directory.
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--prefix		03	Output prefix. Default: 03.
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--case_gene		EGFR	Representative case gene. Default: EGFR.
+05_all_protein_comparison/03_aggregate_rank_all_protein_mediators.py	--case_icd3		N17	Representative case ICD-3. Default: N17.
+05_all_protein_comparison/04_compare_encoded_vs_best_nonencoded.py	--encoded_summary	True		Path to 03_encoded_protein_ranking_summary.tsv.
+05_all_protein_comparison/04_compare_encoded_vs_best_nonencoded.py	--outdir	True		Output directory.
+05_all_protein_comparison/04_compare_encoded_vs_best_nonencoded.py	--prefix		04	Output prefix. Default: 04.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--correlation_runset	True		Path to 04_step5_correlation_runset_encoded_best_nonencoded.tsv.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--covariate_protein_table	True		Path to wes_olink_covariates_analytic.tsv.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--outdir	True		Output directory.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--prefix		05	Output prefix. Default: 05.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--covariates		DEFAULT_COVARIATES	Covariates used for residual correlation.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--min_complete_case		200	Minimum complete-case sample size for correlation analysis.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--high_corr_cutoff		0.7	Absolute correlation cutoff for high correlation.
+05_all_protein_comparison/05_encoded_nonencoded_correlation.py	--moderate_corr_cutoff		0.4	Absolute correlation cutoff for moderate correlation.
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--conditional_runset	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--covariate_protein_table	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--e_samples	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--e_genes	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--e_matrix	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--first_occurrence	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--followup_dates	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--outdir	True		
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--prefix		06	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--covariates		DEFAULT_COVARIATES	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_complete_case		200	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_events_complete_case		20	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_carriers_complete_case		10	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_noncarriers_complete_case		200	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_carrier_events_complete_case		2	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_carrier_nonevents_complete_case		5	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--min_M_sd		1e-08	
+05_all_protein_comparison/06_conditional_mediation_encoded_vs_nonencoded.py	--retained_p_cutoff		0.05	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--residual_runset	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--covariate_protein_table	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--e_samples	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--e_genes	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--e_matrix	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--first_occurrence	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--followup_dates	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--outdir	True		
+05_all_protein_comparison/07_residual_mediation_analysis.py	--prefix		07	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--covariates		DEFAULT_COVARIATES	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_complete_case		200	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_events_complete_case		20	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_carriers_complete_case		10	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_noncarriers_complete_case		200	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_carrier_events_complete_case		2	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_carrier_nonevents_complete_case		5	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--min_residual_sd		1e-08	
+05_all_protein_comparison/07_residual_mediation_analysis.py	--retained_p_cutoff		0.05	
+05_all_protein_comparison/08_final_pathway_classification.py	--step4_comparison	True		
+05_all_protein_comparison/08_final_pathway_classification.py	--step5_correlation	True		
+05_all_protein_comparison/08_final_pathway_classification.py	--step6_conditional	True		
+05_all_protein_comparison/08_final_pathway_classification.py	--step7_residual_pair	True		
+05_all_protein_comparison/08_final_pathway_classification.py	--outdir	True		
+05_all_protein_comparison/08_final_pathway_classification.py	--prefix		08	
+06_enrichment/01_prepare_protein_sets.py	--tier1_tsv	True		
+06_enrichment/01_prepare_protein_sets.py	--tier2_tsv	True		
+06_enrichment/01_prepare_protein_sets.py	--outdir	True		
+06_enrichment/01_prepare_protein_sets.py	--protein_col		protein	
+06_enrichment/02_run_enrichment_ora.py	--input_list	True		Protein list txt, one protein per line
+06_enrichment/02_run_enrichment_ora.py	--gmt	True		GMT file
+06_enrichment/02_run_enrichment_ora.py	--set_name	True		Label, e.g. Tier1 or Tier2
+06_enrichment/02_run_enrichment_ora.py	--database_label	True		Label, e.g. Reactome or GO (BP, MF and CC jointly)
+06_enrichment/02_run_enrichment_ora.py	--out_tsv	True		Output enrichment table
+06_enrichment/02_run_enrichment_ora.py	--out_qc	True		Output QC table
+06_enrichment/02_run_enrichment_ora.py	--min_term_size		5	
+06_enrichment/02_run_enrichment_ora.py	--max_term_size		500	

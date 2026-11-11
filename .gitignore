@@ -1,0 +1,8 @@
+config.sh
+data/
+references/
+results/
+run_logs/
+__pycache__/
+*.pyc
+.DS_Store
