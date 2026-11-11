@@ -8,7 +8,10 @@ The original source scripts are preserved separately. `docs/source_mapping.tsv` 
 
 The author-reported analysis versions are **Python 3.12.6** and **R 4.5.1 (2025-06-13), “Great Square Root”**. The retained core programs are Python; R is recorded for the study environment and is not invoked by this subset.
 
+Replace `/path/to/rare-variant-protein-mediation` below with the path to your local repository. Run the setup commands from that repository root.
+
 ```bash
+cd "/path/to/rare-variant-protein-mediation"
 conda env create -f environment.yml
 conda activate protein-mediation-core
 cp config.example.sh config.sh
@@ -26,9 +29,10 @@ See `docs/input_contracts.md` for columns, sample identifiers and relative manif
 
 ## Sequential execution
 
-Run from any working directory; each launcher locates its Python program relative to itself. On a single local process, the mediator–outcome launchers cover all protein columns and the outcome/all-protein programs use one chunk.
+Run the relative-path examples below from the repository root (the directory containing this README). Each launcher locates its Python program relative to itself; to invoke a launcher from another working directory, use its absolute path. On a single local process, the mediator–outcome launchers cover all protein columns and the outcome/all-protein programs use one chunk.
 
 ```bash
+cd "/path/to/rare-variant-protein-mediation"
 bash 01_E_to_M/01_cis_gene_based_pqtl.sh
 bash 01_E_to_M/02_merge_and_complete_FDR_correct.sh
 bash 01_E_to_M/03_filter_rank_cis_pqtl_significant.sh
